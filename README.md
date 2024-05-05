@@ -6,16 +6,15 @@ The challenge encompasses more than that, including a text-based adventure game,
 
 ## Architecture
 The virtual machine's architecture includes three memory regions:
-> * Memory with a 15-bit address space storing 16-bit values (little endian).<br>
-> * Eight registers.<br>
-> * An unbounded stack holding individual 16-bit values.<br>
+> * **Memory with a 15-bit address space storing 16-bit values (little endian).**<br>
+> * **Eight registers.**<br>
+> * **An unbounded stack holding individual 16-bit values.**<br>
 
 As well as 21 instructions:
 ```
-HALT, SET, PUSH, POP, EQ, GT, JMP, JT, JF, ADD, MULT, MOD, AND, OR, NOT, RMEM, WMEM, CALL, RET, OUT, IN, NOOP
+HALT, SET, PUSH, POP, EQ, GT, JMP, JT, JF, ADD, MULT,
+MOD, AND, OR, NOT, RMEM, WMEM, CALL, RET, OUT, IN, NOOP
 ```
-> All numbers are unsigned integers ranging from 0 to 32767 (15-bit).
-> Math operations are modulo 32768.
 
 For detailed specifications and opcode listing, refer to the `arch-spec` file.
 
