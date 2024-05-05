@@ -1,0 +1,6 @@
+arch-spec:      LDOb7UGhTi
+run:            ImoFztWQCvxj
+self-test:      BNCyODLfQkIl
+tablet:         pWDWTEfURAdS
+maze wall:      rdMkyZhveeIv
+teleporter:     JyDQhSbkpyns
