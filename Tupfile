@@ -1,0 +1,2 @@
+: foreach *.c |> clang -g -c -Wall %f -o %o |> bin/%B.o
+: bin/*.o |> clang %f -o %o |> bin/main
