@@ -3,7 +3,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "main.h"
+#include "output.h"
 
+FILE* asm_live_file = NULL;
 bool user_controlling = false;
 uint16_t buffer[32768] = {0};
 uint16_t registers[8] =  {0};
@@ -11,11 +13,6 @@ char moves_buffer[512] = {0};
 size_t PC = 0, move_i = 0;
 int ch = 0;
 StackNode* top = NULL;
-
-extern bool user_controlling;
-extern uint16_t buffer[32768];
-extern uint16_t registers[8];
-extern size_t PC;
 
 // fetches the value from the register, if necessary
 uint16_t get_literal(uint16_t arg) {
@@ -46,7 +43,7 @@ int main() {
     int retval = 0;
 
     // read files into buffer
-    FILE* moves_file = fopen("moves.txt", "r");
+    FILE* moves_file = fopen("etc/moves.txt", "r");
     FILE* bin_file = fopen("challenge.bin", "r");    
     while (true) {
         int byte1 = fgetc(bin_file);
@@ -62,15 +59,17 @@ int main() {
     move_i = 0;
     fclose(bin_file); fclose(moves_file);
 
-    // fprint_asm(); // update the asm.txt file
-    // goto exit;
+    // dump_asm(); // update the asm.txt file
+
+    asm_live_file = fopen("./etc/asm_live.txt", "w");
 
     uint16_t opcode = 0, arg1 = 0, arg2 = 0, arg3 = 0;
     while (true) {
+        dump_live_asm();
+
         opcode = buffer[PC++];
-        // print_ist(opcode);
         // if (user_controlling) { print_curr_state(); }
-        print_ist(PC); 
+        // print_ist(PC); 
 
         switch (opcode) {
             case OP_HALT:
@@ -179,12 +178,13 @@ int main() {
             case OP_NOOP:
                 break;
             default:
-                printf("ERROR: Invalid opcode.\n");
+                printf("ERROR: Invalid opcode: %d\n", opcode);
                 retval = 1; goto exit;
         }
     }
 
     exit:
+    fclose(asm_live_file);
     free_stack(top);
     return retval;
 }
