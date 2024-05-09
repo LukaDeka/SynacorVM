@@ -4,3 +4,4 @@ self-test:      BNCyODLfQkIl
 tablet:         pWDWTEfURAdS
 maze wall:      rdMkyZhveeIv
 teleporter:     JyDQhSbkpyns
+sandy beach:    equBRxcwMbrj (incorrect code)

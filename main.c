@@ -6,7 +6,7 @@
 #include "output.h"
 
 FILE* asm_live_file = NULL;
-bool user_controlling = false;
+bool reading_moves = true;
 uint16_t buffer[32768] = {0};
 uint16_t registers[8] =  {0};
 char moves_buffer[512] = {0};
@@ -24,16 +24,16 @@ uint16_t get_literal(uint16_t arg) {
     } else { return arg; }
 }
 
-// used for solving text-based game
+// used for solving the text-based game
 char move_out() {
-    if (user_controlling) {
-        registers[7] = 1; // TODO: find this number
+    if (!reading_moves) {
         return getchar();
     } else {
         ch = moves_buffer[move_i++];
-        if (ch == '\0') {
-            user_controlling = true;
-            return getchar();
+        if (ch == '*') { // stop reading from moves.txt
+            reading_moves = false;
+            registers[7] = 1;
+            return '\n';
         }
         return ch;
     }
@@ -61,16 +61,19 @@ int main() {
 
     // dump_asm(); // update the asm.txt file
 
-    asm_live_file = fopen("./etc/asm_live.txt", "w");
+    // speed up conformation process
+    buffer[6049] = 18;  // JT -> RET
+    buffer[5515] = 6;   // overwrite this --V--, so OP_EQ evaluates to true:
+                        // 05513 EQ REG_1 REG_0 00006
+                        // 05517 JF REG_1 05601
 
     uint16_t opcode = 0, arg1 = 0, arg2 = 0, arg3 = 0;
     while (true) {
-        dump_live_asm();
+
+        // asm_live_file = fopen("./etc/asm_live.txt", "w");
+        // dump_live_asm();
 
         opcode = buffer[PC++];
-        // if (user_controlling) { print_curr_state(); }
-        // print_ist(PC); 
-
         switch (opcode) {
             case OP_HALT:
                 printf("HALT\n");
