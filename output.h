@@ -9,7 +9,6 @@
 #define RESET "\033[0m"
 
 extern FILE* asm_live_file; 
-extern bool user_controlling;
 extern uint16_t buffer[32768];
 extern uint16_t registers[8];
 extern size_t PC;
