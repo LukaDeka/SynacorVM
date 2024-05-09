@@ -17,8 +17,3 @@ MOD, AND, OR, NOT, RMEM, WMEM, CALL, RET, OUT, IN, NOOP
 ```
 
 For detailed specifications and opcode listing, refer to the `arch-spec` file.
-
-## TODO
-Along the way, there are `8` codes you can gather to verify your progress. So far, I have `6 / 8`.
-
-I need to implement a function that prints the current instruction, as well as the current state of the registers, to help me reverse-engineer and find the necessary code to advance to the last part of the challenge.
