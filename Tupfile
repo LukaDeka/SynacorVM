@@ -1,2 +1,2 @@
-: foreach *.c |> clang -g -c -Wall %f -o %o |> bin/%B.o
-: bin/*.o |> clang %f -o %o |> bin/main
+: foreach *.c |> clang -c -gdwarf-4 -fsanitize=address -Wall -Wextra -Werror -pedantic -O1 %f -o %o |> bin/%B.o
+: bin/*.o |> clang -fsanitize=address %f -o %o |> bin/main
