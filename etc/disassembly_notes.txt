@@ -1,0 +1,27 @@
+858365 -> use teleporter
+863565 -> loop loop
+
+05505: SET  REG_0 00004
+05508: SET  REG_1 00001
+05511: CALL 06049
+
+    beginning:
+06049: JT  REG_0 06057          # first_check
+06052: ADD REG_0 REG_1 00001
+06056: RET
+
+    first_check:
+06057: JT  REG_1 06070          # second_check
+06060: ADD REG_0 REG_0 32767    # REG_0--;
+06064: SET REG_1 REG_7
+06067: CALL beginning
+06069: RET
+
+    second_check:
+06070: PUSH REG_0
+06072: ADD  REG_1 REG_1 32767   # REG_1--;
+06076: CALL 06049               # beginning
+
+    
+05513: EQ   REG_1 REG_0 00006   # REG_0 overwritten to 00006
+05517: JF   REG_1 05601

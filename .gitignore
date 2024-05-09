@@ -1,6 +1,3 @@
 bin/
-.vscode/
-.tup/
-.cache/
-etc/disassembly_notes.txt
+.*/
 etc/asm_live.txt

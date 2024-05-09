@@ -15,12 +15,12 @@ void fprint_arg(uint16_t num, FILE* asm_file) {
 }
 
 void fprint_asm_line(FILE* fp) {
-    fprintf(fp, "%05zu ", PC);
+    fprintf(fp, "%05zu: ", PC);
     uint16_t opcode = buffer[PC++];
 
     switch(opcode) {
     case OP_HALT:
-        fprintf(fp, "%s-----------------------", op_arr[opcode]);
+        fprintf(fp, "%s -----------------", op_arr[opcode]);
         fprintf(fp, "\n");
         break;
     case OP_SET:
@@ -136,7 +136,7 @@ void fprint_asm_line(FILE* fp) {
         fprintf(fp, "%s ", op_arr[opcode]);
         fprint_arg(buffer[PC++], fp);
         char ch = buffer[PC-1];
-        fprintf(fp, "\t(%c)\n", isprint(ch) ? ch : '.');
+        fprintf(fp, "   (%c)\n", isprint(ch) ? ch : '.');
         break;
     case OP_IN:
         fprintf(fp, "%s ", op_arr[opcode]);
